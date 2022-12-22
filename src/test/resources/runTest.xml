@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite  name="UK" >
+    <parameter name ="environment" value ="local" />
+    <listeners>
+        <listener class-name ="reportConfig.AllureTestListener"/>
+    </listeners>
+
+    <test name="Run on Chrome">
+        <parameter name ="browser" value ="chrome" />
+<!--        <parameter name ="ipAddress" value ="192.168.100.124" />-->
+<!--        <parameter name ="port" value ="5061" />-->
+        <classes>
+            <class name=""/>
+        </classes>
+    </test>
+
+
+</suite >

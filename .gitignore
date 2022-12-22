@@ -1,0 +1,17 @@
+HELP.md
+# Ignore build output directory
+build
+/bin/
+/allure-results/
+/test-output/
+.settings
+.classpath
+.project
+.idea
+*.iws
+*.iml
+*.ipr
+.vscode/
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
