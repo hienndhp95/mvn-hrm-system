@@ -1,66 +1,42 @@
 package utilities;
 
-import static org.apache.poi.ss.usermodel.Row.RETURN_BLANK_AS_NULL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import commons.GlobalConstants;
+import com.aspose.cells.Cells;
+import com.aspose.cells.Workbook;
+import com.aspose.cells.Worksheet;
 
 public class ExcelHelper {
-    private static XSSFSheet sheet;
-    private static XSSFWorkbook workbook;
-    private static org.apache.poi.ss.usermodel.Cell Cell;
-    private static XSSFRow Row;
 
     public static ExcelHelper getData() {
         return new ExcelHelper();
     }
 
-    public void setExcelFile(String path) throws Exception {
+    public Map<String, List<String>> getExcelDataAsMap(String excelFilePath, String sheetName) {
+        Map<String, List<String>> data = new HashMap<>();
         try {
-            FileInputStream ExcelFile = new FileInputStream(path);
-            workbook = new XSSFWorkbook(ExcelFile);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public String getCellData(int rowNumber, int columnNumber, String sheeetName) throws Exception {
-        try {
-            sheet = workbook.getSheet(sheeetName);
-            Cell = sheet.getRow(rowNumber).getCell(columnNumber);
-            String cellData = Cell.getStringCellValue();
-            return cellData;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return "";
-        }
-    }
-
-    public void setCellData(String result, int rowNumber, int columnNumber, String sheetName) throws Exception {
-
-        try {
-            sheet = workbook.getSheet(sheetName);
-            Row = sheet.getRow(rowNumber);
-            Cell = Row.getCell(columnNumber, RETURN_BLANK_AS_NULL);
-            if (Cell == null) {
-                Cell = Row.createCell(columnNumber);
-                Cell.setCellValue(result);
-            } else {
-                Cell.setCellValue(result);
+            Workbook workbook = new Workbook(excelFilePath);
+            Worksheet sheet = workbook.getWorksheets().get(sheetName);
+            int maxCell = sheet.getCells().getMaxDataColumn();
+            int maxRow = sheet.getCells().getMaxDataRow();
+            Cells cells = sheet.getCells();
+            for (int i = 0; i <= maxCell; i++) {
+                List<String> value = new ArrayList<>();
+                String key = cells.get(0, i).getDisplayStringValue();
+                for (int j = 1; j <= maxRow; j++) {
+                    value.add(cells.get(j, i).getDisplayStringValue());
+                }
+                if (!key.equals("")) {
+                    data.put(key, value);
+                }
             }
-            FileOutputStream fileOut = new FileOutputStream(GlobalConstants.PATH_TEST_DATA);
-            workbook.write(fileOut);
-            fileOut.flush();
-            fileOut.close();
-            workbook = new XSSFWorkbook(new FileInputStream(GlobalConstants.PATH_TEST_DATA));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
+        return data;
     }
+
 }

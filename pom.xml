@@ -154,8 +154,19 @@
             <scope>provided</scope>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.aspose</groupId>
+            <artifactId>aspose-cells</artifactId>
+            <version>22.12</version>
+        </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>aspose-maven-repository</id>
+            <url>https://repository.aspose.com/repo/</url>
+        </repository>
+    </repositories>
 
     <!-- Compiler/ Run Test -->
     <build>
