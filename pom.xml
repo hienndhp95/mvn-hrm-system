@@ -159,6 +159,12 @@
             <artifactId>aspose-cells</artifactId>
             <version>22.12</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.stephenc.monte</groupId>
+            <artifactId>monte-screen-recorder</artifactId>
+            <version>0.7.7.0</version>
+        </dependency>
     </dependencies>
 
     <repositories>
