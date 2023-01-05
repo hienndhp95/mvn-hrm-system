@@ -37,10 +37,6 @@ public class GlobalConstants {
 
     private static GlobalConstants globalInstance;
 
-    private GlobalConstants() {
-
-    }
-
     public static synchronized GlobalConstants getGlobalConstants() {
         if (globalInstance == null) {
             globalInstance = new GlobalConstants();

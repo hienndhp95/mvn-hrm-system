@@ -1,8 +1,8 @@
 package factoryEnvironment;
 
+import enums.BrowserList;
 import org.openqa.selenium.WebDriver;
 
-import commons.BrowserList;
 import factoryBrowsers.BrowserNotSupportException;
 import factoryBrowsers.ChromeDriverManager;
 import factoryBrowsers.EdgeDriverManager;

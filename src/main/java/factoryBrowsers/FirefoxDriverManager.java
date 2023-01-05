@@ -10,11 +10,9 @@ public class FirefoxDriverManager implements BrowserFactory {
 
     @Override
     public WebDriver getBrowserDriver() {
-        WebDriverManager.firefoxdriver().setup();
-        FirefoxOptions options = new FirefoxOptions();
-        options.addArguments("-private");
-        return new FirefoxDriver(options);
-
+//        FirefoxOptions options = new FirefoxOptions();
+//        options.addArguments("-private");
+        return WebDriverManager.firefoxdriver().create();
     }
 
 }

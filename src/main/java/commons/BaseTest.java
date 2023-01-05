@@ -2,18 +2,12 @@ package commons;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import enums.BrowserList;
 import enums.EnvironmentList;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.BeforeSuite;
@@ -22,7 +16,6 @@ import factoryEnvironment.BrowserstackFactory;
 import factoryEnvironment.GridFactory;
 import factoryEnvironment.LocalFactory;
 import factoryEnvironment.SaucelabFactory;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import utilities.PropertiesConfig;
 
 public class BaseTest {
@@ -67,35 +60,17 @@ public class BaseTest {
         String envUrl = null;
         EnvironmentList env = EnvironmentList.valueOf(serverName.toUpperCase());
         if (env == EnvironmentList.DEV) {
-            envUrl = "http://automationfc.net/wp-admin";
+            envUrl = "https://www.24h.com.vn/";
         } else if (env == EnvironmentList.STAGING) {
             envUrl = "https://www.saucedemo.com/";
         } else if (env == EnvironmentList.PRODUCTION) {
-            envUrl = "https://admin-demo.nopcommerce.com/";
+            envUrl = "https://lazesoftware.com/tool/strgen/";
         } else if (env == EnvironmentList.USER) {
             envUrl = "https://admin-demo.nopcommerce.com/";
         } else if (env == EnvironmentList.ADMIN) {
             envUrl = "https://admin-demo.nopcommerce.com/";
         }
         return envUrl;
-    }
-
-    protected WebDriver getBrowserHeadless(String browserName, String appUrl) {
-        BrowserList browser = BrowserList.valueOf(browserName.toUpperCase());
-        System.out.println("Run with - " + browserName);
-        if (browser == BrowserList.CHROME) {
-            WebDriverManager.chromedriver().setup();
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("headless");
-            options.addArguments("window-size=1920x1080");
-            driver.set(new ChromeDriver(options));
-        } else {
-            throw new RuntimeException("Please input correct the browser name");
-        }
-        driver.get().manage().window().maximize();
-        driver.get().manage().timeouts().implicitlyWait(GlobalConstants.getGlobalConstants().getLongTimeout(), TimeUnit.SECONDS);
-        driver.get().get(appUrl);
-        return driver.get();
     }
 
     public WebDriver getDriverInstance() {
@@ -160,19 +135,6 @@ public class BaseTest {
         }
     }
 
-    public int generateFakeNumber() {
-        Random rand = new Random();
-        return rand.nextInt(99999);
-    }
-
-    /* Get date of system date */
-    public String getCurrentDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date();
-        String dateNow = formatter.format(date);
-        return dateNow;
-    }
-
     protected void closeBrowserDriver() {
         String cmd = null;
         try {
@@ -215,9 +177,7 @@ public class BaseTest {
             try {
                 Process process = Runtime.getRuntime().exec(cmd);
                 process.waitFor();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
         }

@@ -1,19 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite  name="UK" >
-    <parameter name ="environment" value ="local" />
+<suite  name="UK" parallel = "tests" thread-count="2">
+    <parameter name ="envName" value ="local" />
     <listeners>
         <listener class-name ="reportConfig.AllureTestListener"/>
     </listeners>
 
     <test name="Run on Chrome">
         <parameter name ="browser" value ="chrome" />
+        <parameter name ="serverName" value ="dev" />
 <!--        <parameter name ="ipAddress" value ="192.168.100.124" />-->
 <!--        <parameter name ="port" value ="5061" />-->
         <classes>
-            <class name=""/>
+            <class name="com.Login"/>
+            <class name="com.Register"/>
+            <class name="com.ConnectDB"/>
         </classes>
     </test>
+
+<!--    <test name="Run on Edge">-->
+<!--        <parameter name ="browser" value ="edge" />-->
+<!--        <parameter name ="serverName" value ="staging" />-->
+<!--        &lt;!&ndash;        <parameter name ="ipAddress" value ="192.168.100.124" />&ndash;&gt;-->
+<!--        &lt;!&ndash;        <parameter name ="port" value ="5061" />&ndash;&gt;-->
+<!--        <classes>-->
+<!--            <class name="com.Login"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+
+<!--    <test name="Run on Firefox">-->
+<!--        <parameter name ="browser" value ="firefox" />-->
+<!--        <parameter name ="serverName" value ="production" />-->
+<!--        &lt;!&ndash;        <parameter name ="ipAddress" value ="192.168.100.124" />&ndash;&gt;-->
+<!--        &lt;!&ndash;        <parameter name ="port" value ="5061" />&ndash;&gt;-->
+<!--        <classes>-->
+<!--            <class name="com.Login"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
 
 </suite >

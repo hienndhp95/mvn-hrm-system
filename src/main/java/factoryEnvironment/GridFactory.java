@@ -3,6 +3,7 @@ package factoryEnvironment;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import enums.BrowserList;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -10,7 +11,6 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import commons.BrowserList;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class GridFactory {

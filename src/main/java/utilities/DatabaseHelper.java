@@ -16,10 +16,10 @@ public class DatabaseHelper {
     public static Connection conn;
 
     public static Connection getPostgreSQLConnection() {
-        String hostName = "192.168.100.168";
-        String database = "bugfix2_automation_20221214";
-        String userName = "postgres";
-        String password = "123456789";
+        String hostName = "";
+        String database = "";
+        String userName = "";
+        String password = "";
         return getPostgreSQLConnection(hostName, database, userName, password);
     }
 
@@ -56,7 +56,6 @@ public class DatabaseHelper {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("ko co data");
         }
         return results;
 
