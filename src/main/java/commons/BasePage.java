@@ -21,7 +21,6 @@ import pageUIs.CommonUI;
 
 public class BasePage {
 
-    // Open URL
     /**
      * The URL to load. It is best to use a fully qualified URL
      *
@@ -31,7 +30,6 @@ public class BasePage {
     @Step("Open url {1}")
     public void openPageUrl(WebDriver driver, String pageUrl) {
         driver.get(pageUrl);
-        takeScreenshot(driver, "Open Url= " + pageUrl);
         Assert.assertTrue(areJQueryAndJSLoadedSuccess(driver));
     }
 
@@ -81,7 +79,6 @@ public class BasePage {
     @Step("Refresh screen")
     public void refreshCurrentPage(WebDriver driver) {
         driver.navigate().refresh();
-        takeScreenshot(driver, "Refresh page");
     }
 
     /**
@@ -187,7 +184,7 @@ public class BasePage {
     /**
      * Get By locator
      *
-     * @param locatorType type of element start with id or class or name or css or xpath
+     * @param locatorType used to find the element
      * @return A By which locates elements by the value of the "id" or "class" or "name" or "css" or "xpath".
      */
     private By getByLocator(String locatorType) {
@@ -211,9 +208,9 @@ public class BasePage {
     /**
      * Returns a formatted string using the specified format string and arguments. The locale always used is the one returned by Locale.getDefault().
      *
-     * @param locatorType   type of element start with id or class or name or css or xpath contains arguments.
+     * @param locatorType   used to find the element contains arguments.
      * @param dynamicValues arguments of @param locatorType
-     * @return A formatted string
+     * @return A formatted string locatorType
      */
     private String getDynamicXpath(String locatorType, String... dynamicValues) {
         if (locatorType.startsWith("XPATH=") || locatorType.startsWith("Xpath=") || locatorType.startsWith("xpath=") || locatorType.startsWith("XPath=")) {
@@ -226,7 +223,7 @@ public class BasePage {
      * Find the first WebElement using the given method
      *
      * @param driver      driver of browser
-     * @param locatorType type of element start with id or class or name or css or xpath
+     * @param locatorType used to find the element
      * @return The first matching element on the current page
      */
     public WebElement getWebElement(WebDriver driver, String locatorType) {
@@ -237,7 +234,7 @@ public class BasePage {
      * Find all elements within the current page using the given mechanism.
      *
      * @param driver      driver of browser
-     * @param locatorType type of element start with id or class or name or css or xpath
+     * @param locatorType used to find the element
      * @return A list of all WebElements, or an empty list if nothing matches
      */
     public List<WebElement> getListWebElement(WebDriver driver, String locatorType) {
@@ -248,7 +245,7 @@ public class BasePage {
      * Click to Element
      *
      * @param driver      driver of browser
-     * @param locatorType type of element start with id or class or name or css or xpath
+     * @param locatorType used to find the element
      */
     public void clickToElement(WebDriver driver, String locatorType) {
         highlightElement(driver, locatorType);
@@ -259,7 +256,7 @@ public class BasePage {
      * Click to Element with dynamic values
      *
      * @param driver        driver of browser
-     * @param locatorType   type of element start with id or class or name or css or xpath contains arguments.
+     * @param locatorType   used to find the element contains arguments.
      * @param dynamicValues arguments of @param locatorType
      */
     public void clickToElement(WebDriver driver, String locatorType, String... dynamicValues) {
@@ -271,7 +268,7 @@ public class BasePage {
      * Double click to Element
      *
      * @param driver      driver of browser
-     * @param locatorType type of element start with id or class or name or css or xpath
+     * @param locatorType used to find the element
      */
     public void doubleClickToElement(WebDriver driver, String locatorType) {
         highlightElement(driver, locatorType);
@@ -284,7 +281,7 @@ public class BasePage {
      * Double click to Element with dynamic values
      *
      * @param driver        driver of browser
-     * @param locatorType   type of element start with id or class or name or css or xpath contains arguments.
+     * @param locatorType   used to find the element contains arguments.
      * @param dynamicValues arguments of @param locatorType
      */
     public void doubleClickToElement(WebDriver driver, String locatorType, String... dynamicValues) {
@@ -298,7 +295,7 @@ public class BasePage {
      * Send key to Element
      *
      * @param driver      driver of browser
-     * @param locatorType type of element start with id or class or name or css or xpath
+     * @param locatorType used to find the element
      * @param textValue   value to input
      */
     public void sendkeyToElement(WebDriver driver, String locatorType, String textValue) {
@@ -312,7 +309,7 @@ public class BasePage {
      * Send key to Element with dynamic values
      *
      * @param driver        driver of browser
-     * @param locatorType   type of element start with id or class or name or css or xpath contains arguments.
+     * @param locatorType   used to find the element contains arguments.
      * @param textValue     value to input
      * @param dynamicValues arguments of @param locatorType.
      */
@@ -324,10 +321,10 @@ public class BasePage {
     }
 
     /**
-     * Select options that display text matching the argument
+     * Select options that display text matching the argument (Item in dropdown is start with tag name <select>)
      *
      * @param driver      driver of browser
-     * @param locatorType type of element start with id or class or name or css or xpath
+     * @param locatorType used to find the element
      * @param textItem    The visible text to match against
      */
     public void selectItemInDefaultDropdown(WebDriver driver, String locatorType, String textItem) {
@@ -336,10 +333,10 @@ public class BasePage {
     }
 
     /**
-     * Select options that display text matching the argument
+     * Select options that display text matching the argument (Item in dropdown is start with tag name <select>)
      *
      * @param driver        driver of browser
-     * @param locatorType   type of element start with id or class or name or css or xpath contains arguments.
+     * @param locatorType   used to find the element contains arguments.
      * @param textItem      The visible text to match against
      * @param dynamicValues arguments of @param locatorType.
      */
@@ -349,9 +346,12 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @return
+     *
+     * Get text of item selected in default dropdown (Item in dropdown is start with tag name <select>)
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
+     * @return Text of item
      */
     public String getSelectItemDefaultDropdown(WebDriver driver, String locatorType) {
         Select select = new Select(getWebElement(driver, locatorType));
@@ -359,10 +359,12 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
-     * @return
+     * Get text of item selected in default dropdown (Item in dropdown is start with tag name <select>)
+     *
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element contains arguments.
+     * @param dynamicValues arguments of @param locatorType.
+     * @return Text of item
      */
     public String getSelectItemDefaultDropdown(WebDriver driver, String locatorType, String... dynamicValues) {
         Select select = new Select(getWebElement(driver, getDynamicXpath(locatorType, dynamicValues)));
@@ -370,9 +372,9 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @return
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
+     * @return Whether this select element support selecting multiple options at the same time? This is done by checking the value of the "multiple" attribute.
      */
     public boolean isDropdownMultiple(WebDriver driver, String locatorType) {
         Select select = new Select(getWebElement(driver, locatorType));
@@ -380,10 +382,12 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param parentXpath
-     * @param childXpath
-     * @param expectedText
+     * Select item that display text matching the argument (Item in dropdown don't start with tag name <select>)
+     *
+     * @param driver       driver of browser
+     * @param parentXpath  dropdown list
+     * @param childXpath   list item in dropdown
+     * @param expectedText item will be selected
      */
     public void selectItemInDropdown(WebDriver driver, String parentXpath, String childXpath, String expectedText) {
         highlightElement(driver, parentXpath);
@@ -406,15 +410,18 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param parentXpath
-     * @param childXpath
-     * @param expectedText
-     * @param dynamicValues
+     * Select item that display text matching the argument (Item in dropdown don't start with tag name <select>)
+     *
+     * @param driver        driver of browser
+     * @param parentXpath   dropdown list
+     * @param childXpath    list item in dropdown
+     * @param expectedText  item will be selected
+     * @param dynamicValues arguments of @param childXpath
      */
     public void selectItemInDropdown(WebDriver driver, String parentXpath, String childXpath, String expectedText, String... dynamicValues) {
+        highlightElement(driver, parentXpath);
         getWebElement(driver, parentXpath).click();
-        sleepInSecond(1);
+        sleepInSecond(2);
         WebDriverWait explicitWait = new WebDriverWait(driver, longTimeout);
         List<WebElement> allItems = explicitWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(getByLocator(getDynamicXpath(childXpath, dynamicValues))));
         for (WebElement item : allItems) {
@@ -432,94 +439,127 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param attributeName
-     * @return
+     * Select item that display text matching the argument (Item in dropdown don't start with tag name <select>)
+     *
+     * @param driver        driver of browser
+     * @param parentXpath   dropdown list
+     * @param childXpath    list item in dropdown
+     * @param expectedText  item will be selected
+     * @param dynamicValues arguments of @param parentXpath
      */
-    public String getElementAttribute(WebDriver driver, String attributeName) {
-        return getWebElement(driver, attributeName).getAttribute(attributeName);
+    public void selectItemInDropdownDynamic(WebDriver driver, String parentXpath, String childXpath, String expectedText, String... dynamicValues) {
+        highlightElement(driver, parentXpath, dynamicValues);
+        getWebElement(driver, getDynamicXpath(parentXpath, dynamicValues)).click();
+        sleepInSecond(1);
+        WebDriverWait explicitWait = new WebDriverWait(driver, longTimeout);
+        List<WebElement> allItems = explicitWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(getByLocator(childXpath)));
+        for (WebElement item : allItems) {
+            if (item.getText().trim().equals(expectedText)) {
+                if (item.isDisplayed()) {
+                    item.click();
+                } else {
+                    JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+                    jsExecutor.executeScript("arguments[0].scrollIntoView(true);", item);
+                    item.click();
+                }
+                break;
+            }
+        }
     }
 
     /**
-     * @param driver
-     * @param attributeName
-     * @param dynamicValues
-     * @return
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param attributeName The name of the attribute.
+     * @return The attribute/property's current value or null if the value is not set.
      */
-    public String getElementAttribute(WebDriver driver, String attributeName, String... dynamicValues) {
-        return getWebElement(driver, getDynamicXpath(attributeName, dynamicValues)).getAttribute(attributeName);
+    public String getElementAttribute(WebDriver driver, String locatorType, String attributeName) {
+        return getWebElement(driver, locatorType).getAttribute(attributeName);
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @return
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param attributeName The name of the attribute.
+     * @param dynamicValues arguments of @param locatorType
+     * @return The attribute/property's current value or null if the value is not set.
+     */
+    public String getElementAttribute(WebDriver driver, String locatorType, String attributeName, String... dynamicValues) {
+        return getWebElement(driver, getDynamicXpath(locatorType, dynamicValues)).getAttribute(attributeName);
+    }
+
+    /**
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
+     * @return The visible text of this element.
      */
     public String getElementText(WebDriver driver, String locatorType) {
         return getWebElement(driver, locatorType).getText();
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
-     * @return
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
+     * @return The visible text of this element.
      */
     public String getElementText(WebDriver driver, String locatorType, String... dynamicValues) {
         return getWebElement(driver, getDynamicXpath(locatorType, dynamicValues)).getText();
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param propertyName
-     * @return
+     * @param driver       driver of browser
+     * @param locatorType  used to find the element
+     * @param propertyName the css property name of the element
+     * @return The current, computed value of the property.
      */
     public String getElementCssValue(WebDriver driver, String locatorType, String propertyName) {
         return getWebElement(driver, locatorType).getCssValue(propertyName);
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param propertyName
-     * @param dynamicValues
-     * @return
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param propertyName  the css property name of the element
+     * @param dynamicValues arguments of @param locatorType
+     * @return The current, computed value of the property.
      */
     public String getElementCssValue(WebDriver driver, String locatorType, String propertyName, String... dynamicValues) {
         return getWebElement(driver, getDynamicXpath(locatorType, dynamicValues)).getCssValue(propertyName);
     }
 
     /**
-     * @param rgbaValue
-     * @return
+     * Get Hex color from RGBA color
+     *
+     * @param rgbaValue value of rgba
+     * @return color converted Hex color
      */
     public String getHexaColorFromRGBA(String rgbaValue) {
         return Color.fromString(rgbaValue).asHex();
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @return
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
+     * @return the number of elements in this list.
      */
     public int getElementSize(WebDriver driver, String locatorType) {
         return getListWebElement(driver, locatorType).size();
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
-     * @return
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
+     * @return the number of elements in this list.
      */
     public int getElementSize(WebDriver driver, String locatorType, String... dynamicValues) {
         return getListWebElement(driver, getDynamicXpath(locatorType, dynamicValues)).size();
     }
 
     /**
-     * @param driver
-     * @param locatorType
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
      */
     public void checkToDefaultCheckboxOrRadio(WebDriver driver, String locatorType) {
         highlightElement(driver, locatorType);
@@ -530,9 +570,9 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
      */
     public void checkToDefaultCheckboxOrRadio(WebDriver driver, String locatorType, String... dynamicValues) {
         highlightElement(driver, locatorType, dynamicValues);
@@ -543,8 +583,10 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
+     * Uncheck to default checkbox
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
      */
     public void uncheckToDefaultCheckbox(WebDriver driver, String locatorType) {
         highlightElement(driver, locatorType);
@@ -555,9 +597,11 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
+     * Uncheck to default checkbox
+     *
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
      */
     public void uncheckToDefaultCheckbox(WebDriver driver, String locatorType, String... dynamicValues) {
         highlightElement(driver, locatorType, dynamicValues);
@@ -568,79 +612,83 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @return
+     * Is this element displayed or not?
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
+     * @return Whether or not the element is displayed
      */
     public boolean isElementDisplayed(WebDriver driver, String locatorType) {
         return getWebElement(driver, locatorType).isDisplayed();
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
-     * @return
+     * Is this element displayed or not?
+     *
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
+     * @return Whether or not the element is displayed
      */
     public boolean isElementDisplayed(WebDriver driver, String locatorType, String... dynamicValues) {
         return getWebElement(driver, getDynamicXpath(locatorType, dynamicValues)).isDisplayed();
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @return
+     * Is this element Undisplayed or not?
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
+     * @return Whether or not the element is Undisplayed
      */
     public boolean isElementUndisplayed(WebDriver driver, String locatorType) {
         overrideImplicitTimeout(driver, shortTimeout);
         List<WebElement> elements = getListWebElement(driver, locatorType);
         overrideImplicitTimeout(driver, longTimeout);
         if (elements.size() == 0) {
-            // Không có trong DOM
             return true;
         } else if (elements.size() > 0 && !elements.get(0).isDisplayed()) {
-            // Có trong DOM nhưng không hiển thị
             return true;
         } else {
-            // Có trong DOM và hiển thị
             return false;
         }
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
-     * @return
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
+     * @return Whether or not the element is Undisplayed
      */
     public boolean isElementUndisplayed(WebDriver driver, String locatorType, String... dynamicValues) {
         overrideImplicitTimeout(driver, shortTimeout);
         List<WebElement> elements = getListWebElement(driver, getDynamicXpath(locatorType, dynamicValues));
         overrideImplicitTimeout(driver, longTimeout);
         if (elements.size() == 0) {
-            // Không có trong DOM
             return true;
         } else if (elements.size() > 0 && !elements.get(0).isDisplayed()) {
-            // Có trong DOM nhưng không hiển thị
             return true;
         } else {
-            // Có trong DOM và hiển thị
             return false;
         }
     }
 
     /**
-     * @param driver
-     * @param timeOut
+     * Override timeout
+     *
+     * @param driver  driver of browser
+     * @param timeOut time wait element do something
      */
     public void overrideImplicitTimeout(WebDriver driver, long timeOut) {
         driver.manage().timeouts().implicitlyWait(timeOut, TimeUnit.SECONDS);
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @return
+     * Is the element currently enabled or not?
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
+     * @return True if the element is enabled, false otherwise.
      */
     public boolean isElementEnabled(WebDriver driver, String locatorType) {
         highlightElement(driver, locatorType);
@@ -648,10 +696,12 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
-     * @return
+     * Is the element currently enabled or not?
+     *
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
+     * @return True if the element is enabled, false otherwise.
      */
     public boolean isElementEnabled(WebDriver driver, String locatorType, String... dynamicValues) {
         highlightElement(driver, locatorType, dynamicValues);
@@ -659,27 +709,33 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @return
+     * Determine whether or not this element is selected or not?
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
+     * @return True if the element is currently selected or checked, false otherwise.
      */
     public boolean isElementSelected(WebDriver driver, String locatorType) {
         return getWebElement(driver, locatorType).isSelected();
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
-     * @return
+     * Determine whether or not this element is selected or not?
+     *
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
+     * @return True if the element is currently selected or checked, false otherwise.
      */
     public boolean isElementSelected(WebDriver driver, String locatorType, String... dynamicValues) {
         return getWebElement(driver, getDynamicXpath(locatorType, dynamicValues)).isSelected();
     }
 
     /**
-     * @param driver
-     * @param locatorType
+     * Select a frame using its previously located WebElement.
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element to switch to.
      */
     public void switchToFrameIframe(WebDriver driver, String locatorType) {
         waitForElementVisible(driver, locatorType);
@@ -687,35 +743,56 @@ public class BasePage {
     }
 
     /**
-     * @param driver
+     * Select a frame using its previously located WebElement.
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element to switch to.
+     */
+    public void switchToFrameIframe(WebDriver driver, String locatorType, String... dynamicValues) {
+        waitForElementVisible(driver, getDynamicXpath(locatorType, dynamicValues));
+        driver.switchTo().frame(getWebElement(driver, getDynamicXpath(locatorType, dynamicValues)));
+    }
+
+    /**
+     * Selects either the first frame on the page, or the main document when a page contains iframes.
+     *
+     * @param driver driver of browser
      */
     public void switchToDefaultContent(WebDriver driver) {
         driver.switchTo().defaultContent();
     }
 
     /**
-     * @param driver
-     * @param locatorType
+     * Moves the mouse to the element
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
      */
     public void hoverMouseToElement(WebDriver driver, String locatorType) {
+        highlightElement(driver, locatorType);
         Actions action = new Actions(driver);
         action.moveToElement(getWebElement(driver, locatorType)).perform();
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
+     * Moves the mouse to the element
+     *
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
      */
     public void hoverMouseToElement(WebDriver driver, String locatorType, String... dynamicValues) {
+        highlightElement(driver, locatorType, dynamicValues);
         Actions action = new Actions(driver);
         action.moveToElement(getWebElement(driver, getDynamicXpath(locatorType, dynamicValues))).perform();
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param key
+     * Press the key to interact with the element
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
+     * @param key         The keys to send from keyboard
      */
     public void pressKeyToElement(WebDriver driver, String locatorType, Keys key) {
         Actions action = new Actions(driver);
@@ -723,10 +800,12 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param key
-     * @param dynamicValues
+     * Press the key to interact with the element
+     *
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param key           The keys to send from keyboard
+     * @param dynamicValues arguments of @param locatorType
      */
     public void pressKeyToElement(WebDriver driver, String locatorType, Keys key, String... dynamicValues) {
         Actions action = new Actions(driver);
@@ -734,7 +813,9 @@ public class BasePage {
     }
 
     /**
-     * @param driver
+     * Scroll to bottom of page
+     *
+     * @param driver driver of browser
      */
     public void scrollToBottomPage(WebDriver driver) {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
@@ -742,8 +823,10 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
+     * Highlight element before interact
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
      */
     public void highlightElement(WebDriver driver, String locatorType) {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
@@ -755,9 +838,11 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
+     * Highlight element before interact
+     *
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
      */
     public void highlightElement(WebDriver driver, String locatorType, String... dynamicValues) {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
@@ -769,8 +854,10 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
+     * Click to element using Javascript
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
      */
     public void clickToElementByJS(WebDriver driver, String locatorType) {
         highlightElement(driver, locatorType);
@@ -779,8 +866,23 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
+     * Click to element using Javascript
+     *
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
+     */
+    public void clickToElementByJS(WebDriver driver, String locatorType, String... dynamicValues) {
+        highlightElement(driver, locatorType, dynamicValues);
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript("arguments[0].click();", getWebElement(driver, getDynamicXpath(locatorType, dynamicValues)));
+    }
+
+    /**
+     * Scroll to element before interact
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
      */
     public void scrollToElement(WebDriver driver, String locatorType) {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
@@ -788,9 +890,11 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
+     * Scroll to element before interact
+     *
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
      */
     public void scrollToElement(WebDriver driver, String locatorType, String... dynamicValues) {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
@@ -798,9 +902,11 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param attributeRemove
+     * Remove attribute of element in DOM
+     *
+     * @param driver          driver of browser
+     * @param locatorType     used to find the element
+     * @param attributeRemove Attribute name
      */
     public void removeAttributeInDOM(WebDriver driver, String locatorType, String attributeRemove) {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
@@ -808,8 +914,10 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @return
+     * Wait for JQuery and JS of page loaded success
+     *
+     * @param driver driver of browser
+     * @return True if the page loaded, false otherwise.
      */
     public boolean areJQueryAndJSLoadedSuccess(WebDriver driver) {
         WebDriverWait explicitWait = new WebDriverWait(driver, longTimeout);
@@ -834,9 +942,11 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @return
+     * Get text of validation message
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
+     * @return text of validation message
      */
     public String getElementValidationMessage(WebDriver driver, String locatorType) {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
@@ -844,9 +954,11 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @return
+     * Is the image loaded or not?
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
+     * @return True if the image loaded, false otherwise.
      */
     public boolean isImageLoaded(WebDriver driver, String locatorType) {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
@@ -859,10 +971,12 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
-     * @return
+     * Is the image loaded or not?
+     *
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
+     * @return True if the page loaded, false otherwise.
      */
     public boolean isImageLoaded(WebDriver driver, String locatorType, String... dynamicValues) {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
@@ -871,8 +985,10 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
+     * Wait for element is present on the DOM of a page and visible.
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
      */
     public void waitForElementVisible(WebDriver driver, String locatorType) {
         WebDriverWait explicitWait = new WebDriverWait(driver, longTimeout);
@@ -880,9 +996,11 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
+     * Wait for dynamic element is present on the DOM of a page and visible.
+     *
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
      */
     public void waitForElementVisible(WebDriver driver, String locatorType, String... dynamicValues) {
         WebDriverWait explicitWait = new WebDriverWait(driver, longTimeout);
@@ -890,8 +1008,10 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
+     * Wait for all elements present on the web page that match the locator are visible.
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
      */
     public void waitForAllElementVisible(WebDriver driver, String locatorType) {
         WebDriverWait explicitWait = new WebDriverWait(driver, longTimeout);
@@ -899,9 +1019,11 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
+     * Wait for all elements present on the web page that match the locator are visible.
+     *
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
      */
     public void waitForAllElementVisible(WebDriver driver, String locatorType, String... dynamicValues) {
         WebDriverWait explicitWait = new WebDriverWait(driver, longTimeout);
@@ -909,8 +1031,10 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
+     * Wait for element is either invisible or not present on the DOM.
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
      */
     public void waitForElementInvisible(WebDriver driver, String locatorType) {
         WebDriverWait explicitWait = new WebDriverWait(driver, longTimeout);
@@ -918,9 +1042,11 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
+     * Wait for dynamic element is either invisible or not present on the DOM.
+     *
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
      */
     public void waitForElementInvisible(WebDriver driver, String locatorType, String... dynamicValues) {
         WebDriverWait explicitWait = new WebDriverWait(driver, longTimeout);
@@ -930,8 +1056,8 @@ public class BasePage {
     /**
      * Wait for element undisplayed in DOM or not in DOM and override implicit timeout
      *
-     * @param driver
-     * @param locatorType
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
      */
     public void waitForElementUndisplayed(WebDriver driver, String locatorType) {
         WebDriverWait explicitWait = new WebDriverWait(driver, shortTimeout);
@@ -943,9 +1069,9 @@ public class BasePage {
     /**
      * Wait for dynamic element undisplayed in DOM or not in DOM and override implicit timeout
      *
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
      */
     public void waitForElementUndisplayed(WebDriver driver, String locatorType, String... dynamicValues) {
         WebDriverWait explicitWait = new WebDriverWait(driver, shortTimeout);
@@ -955,8 +1081,10 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
+     * Wait for all elements from given list to be invisible
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
      */
     public void waitForAllElementInvisible(WebDriver driver, String locatorType) {
         WebDriverWait explicitWait = new WebDriverWait(driver, longTimeout);
@@ -964,9 +1092,11 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
+     * Wait for all elements from given list to be invisible
+     *
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
      */
     public void waitForAllElementInvisible(WebDriver driver, String locatorType, String... dynamicValues) {
         WebDriverWait explicitWait = new WebDriverWait(driver, longTimeout);
@@ -974,8 +1104,10 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
+     * Wait for element is visible and enabled such that you can click it.
+     *
+     * @param driver      driver of browser
+     * @param locatorType used to find the element
      */
     public void waitForElementClickable(WebDriver driver, String locatorType) {
         WebDriverWait explicitWait = new WebDriverWait(driver, longTimeout);
@@ -983,9 +1115,11 @@ public class BasePage {
     }
 
     /**
-     * @param driver
-     * @param locatorType
-     * @param dynamicValues
+     * Wait for dynamic element is visible and enabled such that you can click it.
+     *
+     * @param driver        driver of browser
+     * @param locatorType   used to find the element
+     * @param dynamicValues arguments of @param locatorType
      */
     public void waitForElementClickable(WebDriver driver, String locatorType, String... dynamicValues) {
         WebDriverWait explicitWait = new WebDriverWait(driver, longTimeout);
@@ -1002,8 +1136,9 @@ public class BasePage {
         Allure.addAttachment(name, new ByteArrayInputStream(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)));
     }
 
-    /* Upload for all site */
     /**
+     * Upload multiple file for all site
+     *
      * @param driver
      * @param fileNames
      */
@@ -1019,11 +1154,12 @@ public class BasePage {
         getWebElement(driver, CommonUI.UPLOAD_FILE).sendKeys(fullFileName);
     }
 
-    /* Check file downloaded */
     /**
+     * Is the file downloaded or not?
+     *
      * @param downloadPath
      * @param fileName
-     * @return
+     * @return True if file downloaded, false otherwise.
      */
     public boolean isFileDownloaded(String downloadPath, String fileName) {
         boolean flag = false;
@@ -1038,11 +1174,12 @@ public class BasePage {
         return flag;
     }
 
-    /* Check file downloaded */
     /**
+     * Is the file name downloaded or not?
+     *
      * @param downloadPath
      * @param fileName
-     * @return
+     * @return True if file name downloaded, false otherwise.
      */
     public boolean isExpectedFileName(String downloadPath, String fileName) {
         boolean flag = false;
@@ -1053,10 +1190,11 @@ public class BasePage {
         return flag;
     }
 
-    /* Get the latest file from a specific directory */
     /**
-     * @param dirPath
-     * @return
+     * Get the latest file from a specific directory
+     *
+     * @param dirPath File save path
+     * @return True if latest file, false otherwise.
      */
     private File getLatestFilefromDir(String dirPath) {
         File dir = new File(dirPath);
