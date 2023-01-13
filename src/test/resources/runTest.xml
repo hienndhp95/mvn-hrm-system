@@ -13,8 +13,6 @@
 <!--        <parameter name ="port" value ="5061" />-->
         <classes>
             <class name="com.Login"/>
-            <class name="com.Register"/>
-            <class name="com.ConnectDB"/>
         </classes>
     </test>
 

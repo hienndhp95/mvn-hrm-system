@@ -24,6 +24,7 @@ public class BaseTest {
 
     @BeforeSuite
     public void initBeforeSuite() {
+        deleteFileFromDir();
         deleteAllureReport();
     }
 
@@ -122,8 +123,8 @@ public class BaseTest {
 
     public void deleteAllureReport() {
         try {
-            String pathFolderDownload = GlobalConstants.getGlobalConstants().getProjectPath() + "/allure-results";
-            File file = new File(pathFolderDownload);
+            String pathFolderAllure = GlobalConstants.getGlobalConstants().getProjectPath() + "/allure-results";
+            File file = new File(pathFolderAllure);
             File[] listOfFiles = file.listFiles();
             for (int i = 0; i < listOfFiles.length; i++) {
                 if (listOfFiles[i].isFile()) {
@@ -132,6 +133,15 @@ public class BaseTest {
             }
         } catch (Exception e) {
             System.out.print(e.getMessage());
+        }
+    }
+
+    public void deleteFileFromDir(){
+        String path = GlobalConstants.getGlobalConstants().getProjectPath() + "/test-recordings";
+        File directory = new File(path);
+        File[] files = directory.listFiles();
+        for(File file:files){
+            file.delete();
         }
     }
 

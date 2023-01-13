@@ -4,6 +4,7 @@ build
 /bin/
 /allure-results/
 /test-output/
+/test-recordings/
 .settings
 .classpath
 .project

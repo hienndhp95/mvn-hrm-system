@@ -3,6 +3,7 @@ package utilities;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -19,32 +20,26 @@ public class ScreenRecorderHelper extends ScreenRecorder {
     // ------Record with Monte Media library---------
     public static ScreenRecorder screenRecorder;
     public String name;
-    private File currentFile;
 
     //Hàm xây dựng
     public ScreenRecorderHelper(GraphicsConfiguration cfg, Rectangle captureArea, Format fileFormat, Format screenFormat,
-                                Format mouseFormat, Format audioFormat, File movieFolder, String name) throws IOException, AWTException {
+                       Format mouseFormat, Format audioFormat, File movieFolder, String name) throws IOException, AWTException {
         super(cfg, captureArea, fileFormat, screenFormat, mouseFormat, audioFormat, movieFolder);
         this.name = name;
     }
 
     //Hàm này bắt buộc để ghi đè custom lại hàm trong thư viên viết sẵn
     @Override
-    protected File createMovieFile(Format fileFormat) {
+    protected File createMovieFile(Format fileFormat) throws IOException {
 
         if (!movieFolder.exists()) {
             movieFolder.mkdirs();
         } else if (!movieFolder.isDirectory()) {
-            try {
-                throw new IOException("\"" + movieFolder + "\" is not a directory.");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            throw new IOException("\"" + movieFolder + "\" is not a directory.");
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
-        currentFile = new File(movieFolder,
+        return new File(movieFolder,
                 name + "-" + dateFormat.format(new Date()) + "." + Registry.getInstance().getExtension(fileFormat));
-        return currentFile;
     }
 
     // Hàm Start record video
@@ -70,27 +65,7 @@ public class ScreenRecorderHelper extends ScreenRecorder {
     }
 
     // Stop record video
-    public static void stopRecord() {
-        try {
-            screenRecorder.stop();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void deleteRecording() {
-        boolean deleted = false;
-        try{
-            if (currentFile.exists()) {
-                deleted = currentFile.delete();
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        if (deleted)
-            currentFile = null;
-        else
-            System.out.println("Could not delete the screen-record!");
+    public static void stopRecord() throws Exception {
+        screenRecorder.stop();
     }
 }
